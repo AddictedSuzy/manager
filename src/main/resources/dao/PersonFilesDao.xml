@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyue.manager.dao.PersonFilesDao">
+  <resultMap id="BaseResultMap" type="com.zhiyue.manager.entity.PersonFiles">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="employee_id" jdbcType="INTEGER" property="employeeId" />
+    <result column="employee_name" jdbcType="VARCHAR" property="employeeName" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="birth_date" jdbcType="TIMESTAMP" property="birthDate" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="national" jdbcType="VARCHAR" property="national" />
+    <result column="education" jdbcType="VARCHAR" property="education" />
+    <result column="department_id" jdbcType="INTEGER" property="departmentId" />
+    <result column="department_name" jdbcType="VARCHAR" property="departmentName" />
+    <result column="work" jdbcType="VARCHAR" property="work" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, employee_id, employee_name, sex, birth_date, `position`, `national`, education, 
+    department_id, department_name, `work`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from person_files
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectPersonFiles" parameterType="com.zhiyue.manager.entity.PersonFiles" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from person_files
+    <where>
+      <if test="employeeId != null">
+        employee_id = #{employeeId}
+      </if>
+      <if test="employeeName != null">
+        and employee_name = #{employeeName,jdbcType=VARCHAR}
+      </if>
+      <if test="position != null">
+        and position = #{position}
+      </if>
+      <if test="departmentName != null">
+        and department_name = #{departmentName}
+      </if>
+    </where>
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from person_files
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.zhiyue.manager.entity.PersonFiles" useGeneratedKeys="true">
+    insert into person_files (employee_id, employee_name, sex, 
+      birth_date, `position`, `national`, 
+      education, department_id, department_name, 
+      `work`)
+    values (#{employeeId}, #{employeeName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
+      #{birthDate,jdbcType=TIMESTAMP}, #{position,jdbcType=VARCHAR}, #{national,jdbcType=VARCHAR}, 
+      #{education,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{departmentName,jdbcType=VARCHAR}, 
+      #{work,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.zhiyue.manager.entity.PersonFiles" useGeneratedKeys="true">
+    insert into person_files
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="employeeId != null">
+        employee_id,
+      </if>
+      <if test="employeeName != null">
+        employee_name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="birthDate != null">
+        birth_date,
+      </if>
+      <if test="position != null">
+        `position`,
+      </if>
+      <if test="national != null">
+        `national`,
+      </if>
+      <if test="education != null">
+        education,
+      </if>
+      <if test="departmentId != null">
+        department_id,
+      </if>
+      <if test="departmentName != null">
+        department_name,
+      </if>
+      <if test="work != null">
+        `work`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="employeeId != null">
+        #{employeeId},
+      </if>
+      <if test="employeeName != null">
+        #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null">
+        #{birthDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="national != null">
+        #{national,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null">
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="departmentName != null">
+        #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="work != null">
+        #{work,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyue.manager.entity.PersonFiles">
+    update person_files
+    <set>
+      <if test="employeeId != null">
+        employee_id = #{employeeId},
+      </if>
+      <if test="employeeName != null">
+        employee_name = #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null">
+        birth_date = #{birthDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="position != null">
+        `position` = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="national != null">
+        `national` = #{national,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null">
+        department_id = #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="departmentName != null">
+        department_name = #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="work != null">
+        `work` = #{work,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhiyue.manager.entity.PersonFiles">
+    update person_files
+    set employee_id = #{employeeId},
+      employee_name = #{employeeName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      birth_date = #{birthDate,jdbcType=TIMESTAMP},
+      `position` = #{position,jdbcType=VARCHAR},
+      `national` = #{national,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=INTEGER},
+      department_name = #{departmentName,jdbcType=VARCHAR},
+      `work` = #{work,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
